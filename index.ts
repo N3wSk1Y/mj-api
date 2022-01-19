@@ -18,6 +18,18 @@ connection.connect(function(err: any) {
     console.log("Connected!");
 });
 
+
+function startApp() {
+    app.use((res: { status: (arg0: number) => { (): any; new(): any; type: { (arg0: string): void; new(): any; }; }; send: (arg0: string) => void; }) => {
+        res.status(404).type('text/plain')
+        res.send('404 ERROR')
+    })
+
+    app.listen(port, host, function () {
+        console.log(`http://${host}:${port}`)
+    })
+}
+
 // Регистрация нового пользователя
 app.post('/user', (req: { query: { name: string; password: string; }; }, res: { status: (arg0: number) => void; send: (arg0: string) => void; }): void => {
     try {
@@ -185,11 +197,4 @@ app.delete('/post', (req: { query: { sessionkey: any; ID: any; }; }, res: { stat
 }
 })
 
-app.use((res) => {
-    res.status(404).type('text/plain')
-    res.send('404 ERROR')
-})
-
-app.listen(port, host, function () {
-  console.log(`http://${host}:${port}`)
-})
+startApp();
